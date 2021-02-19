@@ -1,0 +1,1 @@
+ - fixed window resize function, current showing month is now the month that rebuilds when the window is resized
