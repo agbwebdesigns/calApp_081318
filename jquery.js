@@ -1,39 +1,4 @@
 /*****************
-an app that lets you enter the days that you have to work in for the week or the upcoming weeks and then enters that into google calendar, there could also be a default calander.
-It would be a simple app that just lets you click the days that you work and then hit submit.
-You could even enter your payday if you want.
-
-Also I need to build a yearly calendar.
-
-If the month starts on a friday and has 31 days in it or if the month starts on a saturday then I will need 6 rows worth of weeks, otherwise i will only need 5.  Or either 35 or 42 tiles would be a better way to put it.  Or if february starts on a sunday and has 28 days in it then only 28 squares will be needed, 4 rows total.
-
-When the page loads I want the correct amount of numbers for the given month to show up, each in one box.  There should always be leftover boxes.  It will have to detect which month it is, through the month variable, then read index 1 from that months array entry in the months array, then put that into a counter and have it put the right number into each box as it's being created.  This might have to be a part of the boxMaker() function.
-
-Now I want to write an algorithm that will figure out what the first day of the month was based on what day it is today.  Then I want the numbering of the days to start there.  So I'll want to take the day that it is, the 8th for example, so the 1st was 8 days before today
-
-Now I want to start the numbering of the month on the day that dayCounter() spits out.  So I will need to first setup a numbering system fot the days of the week, or maybe just use the counter that is already there to assign an id to each box and when the boxMaker() function gets to the right number it starts numbering the days of the month.
-
-Now I want the current day highlighted a different color than the rest.
-
-I'll also need a function to determine how many boxes should be displayed for the month.
-
-In order to switch to the next month, I need to make the program think that the current day is the first day of the next month.  How everything works is based on the month day and date variables.
-I might have to create an input for the functions that call on those variables, where the default is the current month, but this can be changed with a button click.  Also the current day will no longer be highlighted.
-
-When I switch to a month other than the current month, I need the current day to no longer be highlighted.
-
-I want the current showing year to display on the screen as well.  I'll need to create a showingYearCounter variable that increases and decreases with the corrent months just like the showingMonthCounter.
-
-I also need to be able to switch from month to month.
-
-I also need the last days of the previous month and the first days of the next month to show up on the calendar as well if there are boxes available to do so.
-
-I need to be able to switch to the previous month, I can go forward, I need to be able to go backward
-
-I need to add the days of the week to the top of the calendar
-
-make the box colors of the next and previous months days a different color
-
 - maybe add a way to select entire columns(ex. all Tuesdays in a month) and rows(ex. a whole week in the month)
 
 - be able to click on and highlight individual days and have a box that pops up that shows you the date on the box and the id of the box (ex. #a10)
@@ -41,12 +6,6 @@ make the box colors of the next and previous months days a different color
 - current time that updates every minute
 
 - when clicking the current month button, it does not change the date to the new date if a new day has rolled over
-
-clicking next month then previous month to the current month doesn't highlight the day
- when clicking current month from this point the day that highlights is the last day that was highlighted before the entire page was last refreshed
- so clicking to the current month does not populate new data, it keeps the old stored data and refreshes from that
-
-- need to be able to change the screen size without reseting which month is showing
 ****************/
 
 var months= [["January", 31], ["February", 28, 29], ["March", 31], ["April", 30], ["May", 31], ["June", 30], ["July", 31], ["August", 31], ["September", 30], ["October", 31], ["November", 30], ["December", 31]];
@@ -57,7 +16,7 @@ Date information, the object to get the day, date, month and year and store it a
 **************************************************/
 var today= new Date();
 
-var month= today.getMonth();
+var monthmonth= today.getMonth();
 var date= today.getDate();           //the date
 var day= today.getDay();             //the day of the week
 var year= today.getFullYear();
@@ -67,7 +26,7 @@ var minute= today.getMinutes();
 /************************************************
 ************************************************/
 
-var showingMonthCounter= month;         //This will be a counter that the function clickToNextMonth() will increment or decrement,it is the month that is currently is showing
+var showingMonthCounter= monthmonth;         //This will be a counter that the function clickToNextMonth() will increment or decrement,it is the month that is currently is showing
 var showingYearCounter= year;
 var checkMonth;
 var newStartingDay;            //this stores what the first day of the showing month is
@@ -83,7 +42,7 @@ var windowSizeSix = window.matchMedia("(max-width: 368px)");
 This determines if the year is a leap year or not.
 ********************/
 var leapYear;
-$(function()  {
+$(() =>  {
   if (year%4===0 || year%4===0 && year%100===0 && year%400===0)  {
     leapYear=true;
   } else {
@@ -124,8 +83,6 @@ This should be it's own internal clicker that keeps track of the starting days a
 function firstDayOfNextMonthCounter(dayOfWeekOfFirstOfShowingMonth, showingMon)  {     //this function takes the day of the week that the first of the month falls on and the current month that is showing and enters it into 
                                                                            //the function to get the day of the week for the first of next month
 
-  //var startingDay;
-  //var showingMonth;
   var nextMonth;               //This variable stores what the first day of the next month is going to be after the counter is run
   if (dayOfWeekOfFirstOfShowingMonth===0)  {
     nextMonth= months[showingMon][1];
@@ -159,9 +116,7 @@ function firstDayOfNextMonthCounter(dayOfWeekOfFirstOfShowingMonth, showingMon) 
     showingMonChecker= showingMon+1;
   }
 
-  var monthData= { month: showingMonChecker, startDay: nextMonth};             //This variable will be sent back to ajax as the data to be turned into the new month
-  monthData= JSON.stringify(monthData);
-  
+  var monthData= { month: showingMonChecker, startDay: nextMonth};             //This variable will be sent back to ajax as the data to be turned into the new month  
   return monthData;
   //console.log(monthData);
 }
@@ -192,27 +147,15 @@ function firstDayOfLastMonthCounter()  {
     showingMonthCounter-=1;
   }
   var monthData= { month: showingMonthCounter, startDay: newStartingDay};             //This variable will be sent back to ajax as the data to be turned into the new month
-  monthData= JSON.stringify(monthData);
   return monthData;
 }
-
-
-/********************
-When switching to the new month, figure out what day the last day of the month falls on, then you know that the first day of the next month has to be the next day, then save this as the new dayOfWeekOfFirstOfMonth variable.
-**********************/
-//var dayOfWeekOfFirstOfMonth= dayCounter();                      //this saves dayCounter to a variable
-/*function nextMonthFirstDayTracker(dayOfWeekOfFirstOfMonth, mon)  {
-  var nextMonth= dayOfWeekOfFirstOfMonth+months[mon][1]-1;      //this takes that day and adds the number of days of the month to it minus 1 and that is the last day of the month
-};
-
-nextMonthFirstDayTracker(dayCounter(), showingMonthCounter);*/
 
 /*************************
 This function needs to be named and it needs parameters so that I can enter either the dayCounter() information or the firstDayOfNextMonthCounter() information the that the proper month can be built on the page.
 ***********************/
 function monthBuilder(mon, firstDay)  {
   
-  var calDay= months[month][0] + " " + date + ", " + year;
+  var calDay= months[monthmonth][0] + " " + date + ", " + year;
   var calWidth= $("#calBacc").width();                  
   var tileSize= calWidth/7.43;                         //calWidth and tileSize determine the size of the boxes in the calendar
   
@@ -356,14 +299,13 @@ function monthBuilder(mon, firstDay)  {
   *************************/
   $(function()  {
     $("#date h3").html("<h3>" + months[showingMonthCounter][0] + "  |  " + showingYearCounter + "</h3>");
-    //$("#date h3:nth-of-type(2)").html("<h3>" + showingYearCounter + "</h3>");
   });
 
 }
 
-monthBuilder(month, newStartingDay);
+monthBuilder(monthmonth, newStartingDay);
 aboutFunc(windowSizeOne, windowSizeTwo, windowSizeThree, windowSizeFour, windowSizeFive, windowSizeSix);
-checkMonth= month;  //this sets checkMonth to the current month the first time the monthBuilder is run so if the screen is resized on the current month the right month gets built
+checkMonth= monthmonth;  //this sets checkMonth to the current month the first time the monthBuilder is run so if the screen is resized on the current month the right month gets built
 
 /***********************
   This takes what day it is and then adds the .today class to todays box on the calendar to highlight that day.
@@ -386,85 +328,57 @@ Then i need the reverse to go to the previous months.
 I need to pass in the current month so I can use it in the currentMonth variable
 ***********************/
 
-$("#nextMonthButton").click(function()  {
-
-  $.ajax({
-    url: 'load.php',
-    contentType: 'application/json',
-    dataType: 'json',
-    type: 'POST',
-    data: firstDayOfNextMonthCounter(newStartingDay, showingMonthCounter),                 //
-    success: function(data)  {
-        date= today.getDate();
-        $("#calBacc").empty();                       //clears the screen
-        monthBuilder(data.month, data.startDay);     //runs month builder and builds the new months calendar
-        aboutFunc(windowSizeOne, windowSizeTwo, windowSizeThree, windowSizeFour, windowSizeFive, windowSizeSix);  //this function helps display the calendar correctly based on the screen size
-        removeDayHighlight(newStartingDay+date-1);     //unhighlights the current day since it is now showing next month
-        checkMonth= data.month;
-        if(checkMonth===0)  {
-          showingYearCounter++;                      //increments the showing year if necessary
-        }
-        if (checkMonth===month)  {
-          newStartingDay= data.startDay;
-          dayHighlight(newStartingDay+date-1);
-        }
-        newStartingDay= data.startDay;               //this sets what the new starting day for the showing month is when the nextMonthButton is clicked
-    }
-  });
+$("#nextMonthButton").on('click',async() =>  {
+  const {month,startDay}=firstDayOfNextMonthCounter(newStartingDay, showingMonthCounter);
+  date= today.getDate();
+  $("#calBacc").empty();                       //clears the screen
+  monthBuilder(month, startDay);     //runs month builder and builds the new months calendar
+  aboutFunc(windowSizeOne, windowSizeTwo, windowSizeThree, windowSizeFour, windowSizeFive, windowSizeSix);  //this function helps display the calendar correctly based on the screen size
+  removeDayHighlight(newStartingDay+date-1);     //unhighlights the current day since it is now showing next month
+  checkMonth= monthmonth;
+  if(checkMonth===0)  {
+    showingYearCounter++;                      //increments the showing year if necessary
+  }
+  if (checkMonth===month)  {
+    newStartingDay= startDay;
+    dayHighlight(newStartingDay+date-1);
+  }
+  newStartingDay= startDay;               //this sets what the new starting day for the showing month is when the nextMonthButton is clicked
 });
 
 function currentMonthData(mon, startDay)  {
   var currentMonthData= { month: mon, startDay: startDay};             //This variable will be sent back to ajax as the data to be turned into the new month
-  currentMonthData= JSON.stringify(currentMonthData);
   return currentMonthData;
 }
 
-$("#currentMonthButton").click(function()  {
-
+$("#currentMonthButton").on('click',async() =>  {
   dayCounter(day, date);         //this runs dayCounter() again to change the newStartingDay variable back to the starting day for the current month
-  $.ajax({
-    url: 'load.php',
-    contentType: 'application/json',
-    dataType: 'json',
-    type: 'POST',
-    data: currentMonthData(month, newStartingDay),                 //
-    success: function(data)  {
-        date= today.getDate();
-        $("#calBacc").empty();
-        monthBuilder(data.month, data.startDay);
-        aboutFunc(windowSizeOne, windowSizeTwo, windowSizeThree, windowSizeFour, windowSizeFive, windowSizeSix);
-        checkMonth= data.month;
-        newStartingDay= data.startDay;
-        showingMonthCounter= month;                      //resets the showingMonthCounter to the current month
-        showingYearCounter= year;                        //resets the showingYearCounter to the current year
-    }
-  });
+  const {month,startDay}=currentMonthData(monthmonth, newStartingDay);
+  console.log(newStartingDay);
+  date= today.getDate();
+  $("#calBacc").empty();
+  monthBuilder(month, startDay);
+  aboutFunc(windowSizeOne, windowSizeTwo, windowSizeThree, windowSizeFour, windowSizeFive, windowSizeSix);
+  checkMonth= month;
+  newStartingDay= startDay;
+  showingMonthCounter= month;                      //resets the showingMonthCounter to the current month
+  showingYearCounter= year;                        //resets the showingYearCounter to the current year
 });
 
-$("#previousMonthButton").click(function()  {
-
-  $.ajax({
-    url: 'load.php',
-    contentType: 'application/json',
-    dataType: 'json',
-    type: 'POST',
-    data: firstDayOfLastMonthCounter(),
-    success: function(data)  {
-        date= today.getDate();
-        $("#calBacc").empty();
-        monthBuilder(data.month, data.startDay);
-        aboutFunc(windowSizeOne, windowSizeTwo, windowSizeThree, windowSizeFour, windowSizeFive, windowSizeSix);
-        checkMonth= data.month;
-        if (checkMonth===month)  {
-          newStartingDay= data.startDay;
-          dayHighlight(newStartingDay+date-1)
-        } else {
-          newStartingDay= data.startDay;
-          removeDayHighlight(newStartingDay+date-1);     //unhighlights the current day since it is now showing next month
-
-        }
-    }
-  });
+$("#previousMonthButton").on('click',async() =>  {
+  const {month,startDay}=firstDayOfLastMonthCounter();
+  date= today.getDate();
+  $("#calBacc").empty();
+  monthBuilder(month,startDay);
+  aboutFunc(windowSizeOne, windowSizeTwo, windowSizeThree, windowSizeFour, windowSizeFive, windowSizeSix);
+  checkMonth= month;
+  if (checkMonth===monthmonth)  {
+    newStartingDay= startDay;
+    dayHighlight(newStartingDay+date-1)
+  } else {
+    newStartingDay= startDay;
+    removeDayHighlight(newStartingDay+date-1);     //unhighlights the current day since it is now showing next month
+  }
 });
 
 /***************************
@@ -519,7 +433,6 @@ showingMonthData runs when the window resize function is run to redisplay the cu
 function showingMonthData(mon, startDay)  {
   console.log("here ------------>" + mon + "," + startDay);
   var showingMonthData= { month: mon, startDay: startDay};             //This variable will be sent back to ajax as the data to be turned into the new month
-  showingMonthData= JSON.stringify(showingMonthData);
   return showingMonthData;
 }
 
@@ -527,30 +440,21 @@ function showingMonthData(mon, startDay)  {
 the window resize function runs and rebuilds the window to display correctly for the new screen size
 ****************************/
 
-$( window ).resize(function() {
-  $.ajax({
-    url: 'load.php',
-    contentType: 'application/json',
-    dataType: 'json',
-    type: 'POST',
-    data: showingMonthData(checkMonth, newStartingDay),  //runs the showingMonthData function with the showing month data
-    success: function(data)  {
-        date= today.getDate();
-        $("#calBacc").empty();  //erase the screen
-        monthBuilder(data.month, data.startDay);  //rebuild the month
-        aboutFunc(windowSizeOne, windowSizeTwo, windowSizeThree, windowSizeFour, windowSizeFive, windowSizeSix);  //run aboutFunc to display at the correct screen size
-        console.log("before" + " " + checkMonth);
-        checkMonth= data.month;  //sets checkMonth to the showing month
-        console.log("after" + " " + checkMonth);
-        console.log("before" + " " + newStartingDay);
-        newStartingDay= data.startDay;  //sets newStartingDay to the showing month starting day
-        console.log("after" + " " + newStartingDay);
-        showingMonthCounter= checkMonth;                      //resets the showingMonthCounter to the current month
-        showingYearCounter= year;                        //resets the showingYearCounter to the current year
-        if (checkMonth !== month)  {
-          removeDayHighlight(newStartingDay+date-1);     //unhighlights the current day if it is not the current month
-        }
-    }
-  });
-
+$( window ).on('resize',async() => {
+  const {month,startDay}=showingMonthData(checkMonth, newStartingDay);
+  date= today.getDate();
+  $("#calBacc").empty();  //erase the screen
+  monthBuilder(month, startDay);  //rebuild the month
+  aboutFunc(windowSizeOne, windowSizeTwo, windowSizeThree, windowSizeFour, windowSizeFive, windowSizeSix);  //run aboutFunc to display at the correct screen size
+  console.log("before" + " " + checkMonth);
+  checkMonth= monthmonth;  //sets checkMonth to the showing month
+  console.log("after" + " " + checkMonth);
+  console.log("before" + " " + newStartingDay);
+  newStartingDay= startDay;  //sets newStartingDay to the showing month starting day
+  console.log("after" + " " + newStartingDay);
+  showingMonthCounter= checkMonth;                      //resets the showingMonthCounter to the current month
+  showingYearCounter= year;                        //resets the showingYearCounter to the current year
+  if (checkMonth !== month)  {
+    removeDayHighlight(newStartingDay+date-1);     //unhighlights the current day if it is not the current month
+  }
 });
