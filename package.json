@@ -1,0 +1,24 @@
+{
+  "name": "calendar_app",
+  "version": "1.3.1",
+  "description": "Calendar/Scheduling tool",
+  "main": "jquery.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agbwebdesigns/calApp_081318.git"
+  },
+  "keywords": [
+    "calendar",
+    "scheduling",
+    "organization"
+  ],
+  "author": "Madison Bennett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agbwebdesigns/calApp_081318/issues"
+  },
+  "homepage": "https://github.com/agbwebdesigns/calApp_081318#readme"
+}
