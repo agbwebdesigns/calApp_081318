@@ -11,12 +11,6 @@
 	<link href="https://fonts.googleapis.com/css?family=Arapey|EB+Garamond|Lora|Ovo" rel="stylesheet"> 
 	<link rel= "stylesheet" type= "text/css" href= "normalize.css" media= "screen">
 	<link rel= "stylesheet" type= "text/css" href= "styles.css" media= "screen">
-	<script
-			  src="https://code.jquery.com/jquery-3.3.1.js"
-			  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-			  crossorigin="anonymous">		  	
-  	</script>
-
 	<title>Calendar</title>
 
 </head>
@@ -29,23 +23,99 @@
 	      	<div class= "date">
 		        <h3>This will be the month that is showing!</h3>
 	    	</div>
-	        <div class= "butt" id= "previousMonthButton">Previous Month</div>
-	        <div class= "butt" id= "currentMonthButton">Current Month</div>
-	        <div class= "butt" id= "nextMonthButton">Next Month</div>
+	        <div id="buttonGroupOne" class="buttonGroup">
+				<div class= "butt monthButt" id= "previousMonthButton">Previous Month</div>
+				<div class= "butt mainButt" id= "currentMonthButton">Month</div>
+				<div class= "butt monthButt" id= "nextMonthButton">Next Month</div>
+			</div>
+			<div id="buttonGroupTwo" class="buttonGroup">
+				<div class= "butt weekButt" id= "previousWeekButton">Previous Week</div>
+				<div class= "butt mainButt" id= "weekButton">Week</div>
+				<div class= "butt weekButt" id= "nextWeekButton">Next Week</div>
+			</div>
+			<div id="buttonGroupThree" class="buttonGroup">
+				<div class= "butt" id= "billsButton">Bills</div>
+			</div>
+			<div class= "butt" id= "loginButton">Login</div>
 	      </header>
 	    </div>
 	  </div>
 	  <div class= "row">
-
 	    <div class= "col-md-12 test testbottom">
-	    	<div class= "calTop">	
-	    	</div>
-	      <div class= "calBack" id= "calBacc">
-	      </div>
+			<div class= "calTop"></div>
+			<div class= "calBack" id= "calBacc"></div>
 	    </div>
+		<div id="dialog" class="dialogBox" title="test box">
+			<form action="" method="post">
+				<label>Email Address:</label>
+				<input type="email">
+				<label>Password:</label>
+				<input type="password">
+				<input type="submit" value="Login">
+				<input type="button" value="Cancel">
+			</form>
+			<div>
+				<p>Don't have an account?</p>
+				<a href="#"><p>Create a new Account</p></a>
+			</div>
+		</div>
+		<div id="dayTileDialog" class="dialogBox">
+			<div id="dayTilePara">
+				<p>This is a dialog box for a very special day!</p>
+			</div>
+			<button>View Day</button>
+			<form action="" method="post">
+				<label>Event:  <input type="text"></label>
+				<label>Time:</label>
+				<select>
+					<option>12</option>
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+					<option>6</option>
+					<option>7</option>
+					<option>8</option>
+					<option>9</option>
+					<option>10</option>
+					<option>11</option>
+				</select>
+				<select>
+					<option>00</option>
+					<option>05</option>
+					<option>10</option>
+					<option>15</option>
+					<option>20</option>
+					<option>25</option>
+					<option>30</option>
+					<option>35</option>
+					<option>40</option>
+					<option>45</option>
+					<option>50</option>
+					<option>55</option>
+				</select>
+				<select>
+					<option>AM</option>
+					<option>PM</option>
+				</select>
+				<input type="submit" value="Submit">
+				<input type="button" value="Cancel" id="closeDialog">
+			</form>
+		</div>
 	  </div>
 	</div>
 
+	<script
+		src="https://code.jquery.com/jquery-3.3.1.js"
+		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+		crossorigin="anonymous"> 	
+  	</script>
+	<script
+		src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"
+		integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c="
+		crossorigin="anonymous">
+	</script>
 	<script type= "text/javascript" src= "jquery.js"></script>
 
 </body>

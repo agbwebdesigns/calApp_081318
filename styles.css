@@ -20,6 +20,7 @@ body  {
   border-radius: 10px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .date  {
@@ -27,6 +28,10 @@ body  {
   display: inline-block;
   border: thin solid white;
   border-radius: 10px;
+}
+
+.buttonGroup  {
+  display: flex;
 }
 
 .head h3  {
@@ -46,13 +51,23 @@ body  {
 }
 
 .butt  {
+  font-size: 1.15em;
   background: #ccc;
-  padding: 5px;
+  padding: 0 10px;
   border: thin solid white;
   border-radius: 10px;
   margin: 1px 1px;
   display: flex;
   align-items: center;
+}
+
+.mainButt  {
+  font-weight: 600;
+  padding: 0 20px;
+}
+
+.hideButt  {
+  visibility: hidden;
 }
 
 .butt:hover  {
@@ -68,8 +83,7 @@ body  {
 
 .calBack  {
   margin: 10px 10px;
-  background: white;
-  //border: thin solid black;
+  background: #332E2E;
 }
 
 .fontsizeabove767  {
@@ -90,14 +104,66 @@ body  {
 
 .dayTile  {
   height: 150px;
-  background: grey;
+  background: #E6E6E6;
   border: thin solid #404040;
   float: left;
   font-size: 1em;
+  padding-bottom: 3px;
+}
+
+.dayTile:hover  {
+  background: darkgrey;
+}
+
+.weekDayBox  {
+  background: #E6E6E6;
+  padding: 10px;
+  border: thin solid #404040;
+  border-radius: 20px;
+}
+
+.weekDayBox:hover  {
+  background: darkgrey;
+}
+
+.weekDayHeader  {
+  border-bottom: thin solid #404040;
+}
+
+.dayView  {
+  background: #E6E6E6;
+  padding: 10px;
+  border: thin solid #404040;
+  border-radius: 20px;
+}
+
+#dayHeader  {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+}
+
+#dayTilePara  {
+  display: inline-block;
+  font-size: 1.3em;
+  font-weight: 700;
+  border-bottom: thin solid darkgrey;
+  margin-bottom: 10px;
+}
+
+.dayViewTimes  {
+  display: flex;
+  align-items: center;
+  border-bottom: thin solid darkgrey;
+  margin-bottom: 10px;
+}
+
+.dayViewTimes p  {
+  margin: 0 10px;
 }
 
 .today  {
-  background: #F2DAE6;
+  background: #F2E1DA;
   color: #404040;
 }
 
@@ -120,4 +186,17 @@ body  {
   padding-bottom: 20px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
+}
+
+.dialogBox  {
+  display: none;
+  background: #fff;
+  padding: 10px;
+  border: thin solid black;
+  border-radius: 10px;
+  box-shadow: 4px 4px 3px;
+}
+
+.ui-dialog-titlebar {
+  display: none;
 }
